@@ -23,7 +23,7 @@ fi
 mkdir -p .sh_thumbnails/normal
 mkdir -p .sh_thumbnails/large
 # Loop files in current directory and generate thumbnails with proper metadata
-for a in *.jp*; do 
+for a in *.jp* *.JP*; do 
 	md5=`echo $a|md5sum|cut -d" " -f1` 
 	mtime=`stat -c '%Y' "$a"`
 	echo "Generating thumbnails for $a..."
