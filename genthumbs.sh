@@ -1,6 +1,11 @@
 #!/bin/bash
 
 # genthumbs
+
+# OptiPNG level of optimization. 7 is best, but it's very slow
+PNGOPTLEVEL=7
+
+
 # Check for dependencies
 if ! type convert > /dev/null 2>&1; then 
 	echo "Imagemagick suite (convert) required but not installed, please install it with your package manager"
@@ -33,7 +38,7 @@ done
 
 if [[ opti -eq 1 ]]; then
 	echo "Optimizing thumbnail sizes..."
-	optipng -o7 -quiet .sh_thumbnails/normal/*.png
-	optipng -o7 -quiet .sh_thumbnails/large/*.png
+	optipng -o$PNGOPTLEVEL -quiet .sh_thumbnails/normal/*.png
+	optipng -o$PNGOPTLEVEL -quiet .sh_thumbnails/large/*.png
 fi
 
