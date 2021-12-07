@@ -29,9 +29,10 @@ mkdir -p .sh_thumbnails/normal
 mkdir -p .sh_thumbnails/large
 # Loop files in current directory and generate thumbnails with proper metadata
 for a in *.jp* *.JP*; do
+  [ -f "$a" ] || continue
+	echo "Generating thumbnails for $a..."
 	md5=$(echo -n $a|md5sum|cut -d" " -f1)
 	mtime=$(stat -c '%Y' "$a")
-	echo "Generating thumbnails for $a..."
 	convert -define jpeg:size=256x256 -auto-orient -thumbnail 128 -set Thumb::MTime "$mtime" -set Thumb::URI "$a" "$a" .sh_thumbnails/normal/$md5.png
 	convert -define jpeg:size=512x512 -auto-orient -thumbnail 256 -set Thumb::MTime "$mtime" -set Thumb::URI "$a" "$a" .sh_thumbnails/large/$md5.png
 done
