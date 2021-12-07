@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # genthumbs
 
@@ -37,7 +37,7 @@ for a in *.jp* *.JP*; do
 	convert -define jpeg:size=512x512 -auto-orient -thumbnail 256 -set Thumb::MTime "$mtime" -set Thumb::URI "$a" "$a" .sh_thumbnails/large/$md5.png
 done
 
-if [[ opti -eq 1 ]]; then
+if [ $opti -eq 1 ]; then
 	echo "Optimizing thumbnail sizes..."
 	optipng -o$PNGOPTLEVEL -quiet .sh_thumbnails/normal/*.png
 	optipng -o$PNGOPTLEVEL -quiet .sh_thumbnails/large/*.png
