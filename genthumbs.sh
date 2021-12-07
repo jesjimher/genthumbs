@@ -30,13 +30,9 @@ for a in *.jp* *.JP*; do
   md5=$(echo -n "$a" | md5sum | cut -d " " -f1)
   mtime=$(stat -c '%Y' "$a")
   icon=".sh_thumbnails/normal/$md5.png"
-  [ -f "$icon" ] || convert -define jpeg:size=256x256 -auto-orient -thumbnail 128 -set Thumb::MTime "$mtime" -set Thumb::URI "$a" "$a" "$icon"
+  [ -f "$icon" ] || convert -define jpeg:size=256x256 -auto-orient -thumbnail 128 -set Thumb::MTime "$mtime" -set Thumb::URI "$a" "$a" "$icon" \
+    && [ $opti -eq 1 ] && optipng -o$PNGOPTLEVEL -quiet "$icon"
 	icon=".sh_thumbnails/large/$md5.png"
-  [ -f "$icon" ] || convert -define jpeg:size=512x512 -auto-orient -thumbnail 256 -set Thumb::MTime "$mtime" -set Thumb::URI "$a" "$a" "$icon"
+  [ -f "$icon" ] || convert -define jpeg:size=512x512 -auto-orient -thumbnail 256 -set Thumb::MTime "$mtime" -set Thumb::URI "$a" "$a" "$icon" \
+    && [ $opti -eq 1 ] && optipng -o$PNGOPTLEVEL -quiet "$icon"
 done
-
-if [ $opti -eq 1 ]; then
-  echo "Optimizing thumbnail sizes..."
-  optipng -o$PNGOPTLEVEL -quiet .sh_thumbnails/normal/*.png
-  optipng -o$PNGOPTLEVEL -quiet .sh_thumbnails/large/*.png
-fi
